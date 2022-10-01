@@ -4,6 +4,7 @@ import { persistStore } from 'redux-persist'
 import { Provider } from 'react-redux'
 import { store } from './src/redux/store'
 import { AppRoute } from './src/navigation/Navigator'
+import Toast from 'react-native-toast-message'
 
 export default function App() {
   let persistor = persistStore(store)
@@ -15,6 +16,7 @@ export default function App() {
           <AppRoute />
         </PersistGate>
       </Provider>
+      <Toast position="bottom" />
     </>
   )
 }

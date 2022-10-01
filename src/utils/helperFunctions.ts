@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Toast from 'react-native-toast-message'
 
 export const storeData = async (key: any, value: any) => {
   try {
@@ -22,4 +23,21 @@ export const removeData = async (key: any) => {
   } catch (e) {
     // remove error
   }
+}
+/**
+ * Show Toast messages
+ */
+export const showErrorToast = (text: any) => {
+  Toast.show({
+    type: 'error',
+    text1: 'Something went wrong!',
+    text2: text,
+  })
+}
+export const showSuccessToast = (text: any) => {
+  Toast.show({
+    type: 'success',
+    text1: 'Successfull',
+    text2: text,
+  })
 }

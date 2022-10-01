@@ -13,14 +13,15 @@ interface Props {
 }
 
 const ValidationSchema = yup.object().shape({
-  name: yup.string(),
-  email: yup.string().email('Must be a valid email address'),
+  name: yup.string().required(),
+  email: yup.string().email('Must be a valid email address').required(),
   phone: yup
     .string()
     .matches(/^[0-9]+$/, 'Please enter the valid mobile number')
-    .min(10, 'Please enter the valid mobile number'),
-  password: yup.string(),
-  confirmPasword: yup.string(),
+    .max(10, 'Please enter 10 digit number')
+    .required(),
+  password: yup.string().required(),
+  confirmPasword: yup.string().required('Confirm password is required'),
 })
 
 interface Props {
@@ -82,32 +83,53 @@ const Signup = () => {
         <InputField
           value={formik.values.name}
           onChangeText={formik.handleChange('name')}
+          onBlur={formik.handleBlur('name')}
+          error={formik.errors.name}
           label="Full Name"
+          isInvalid={!!(formik.errors.name && formik.touched.name)}
         />
         <InputField
           value={formik.values.email}
           onChangeText={formik.handleChange('email')}
+          onBlur={formik.handleBlur('email')}
+          error={formik.errors.email}
           label="Email"
+          isInvalid={!!(formik.errors.email && formik.touched.email)}
         />
         <InputField
           value={formik.values.phone}
           onChangeText={formik.handleChange('phone')}
+          onBlur={formik.handleBlur('phone')}
+          error={formik.errors.phone}
           label="Phone"
+          isInvalid={!!(formik.errors.phone && formik.touched.phone)}
         />
         <InputField
           value={formik.values.password}
           onChangeText={formik.handleChange('password')}
+          onBlur={formik.handleBlur('password')}
+          error={formik.errors.password}
           label="Password"
+          isInvalid={!!(formik.errors.password && formik.touched.password)}
         />
 
         <InputField
           value={formik.values.confirmPasword}
           onChangeText={formik.handleChange('confirmPasword')}
+          onBlur={formik.handleBlur('confirmPasword')}
+          error={formik.errors.confirmPasword}
           label="Confirm Password"
+          isInvalid={
+            !!(formik.errors.confirmPasword && formik.touched.confirmPasword)
+          }
         />
         <Button
           my={'10'}
           width="100%"
+          isDisabled={
+            formik.values.confirmPasword !== formik.values.password ||
+            !(formik.dirty && formik.isValid)
+          }
           height={50}
           alignSelf="flex-end"
           _text={{ fontWeight: 'bold' }}

@@ -2,6 +2,8 @@ import { takeLatest, put } from 'redux-saga/effects'
 import { signUpApi } from '../../API'
 import { signInApi } from '../../API/Auth'
 import { storeData } from '../../utils/helperFunctions'
+import { showErrorToast } from '../../utils/helperFunctions'
+
 import {
   signUp,
   signUpFailed,
@@ -24,28 +26,33 @@ interface SignInAction {
 export function* signUpSaga(action: SignUpAction): Generator {
   try {
     const response: any = yield signUpApi(action.payload)
-    if (response.status) {
+    if (response.data.status) {
       yield put(signUpSuccess(response.data))
       yield storeData('token', response.data.token)
       yield put(setIsLogged(true))
+    } else {
+      showErrorToast(response.data.message)
+      yield put(signInFailed(response.data.message))
     }
   } catch (error: any) {
-    yield put(signUpFailed(error.response.data))
+    showErrorToast(error.response.message)
+    yield put(signUpFailed(error.response.message))
   }
 }
 
 export function* signInSaga(action: SignInAction): Generator {
-  console.log(action.payload)
   try {
     const response: any = yield signInApi(action.payload)
-    if (response.status) {
+    if (response.data.status) {
       yield put(signInSuccess(response.data))
       yield storeData('token', response.data.token)
       yield put(setIsLogged(true))
+    } else {
+      showErrorToast(response.data.message)
+      yield put(signInFailed(response.data.message))
     }
   } catch (error: any) {
-    console.log({ error })
-
+    showErrorToast(error.response.message)
     yield put(signInFailed(error.response.data))
   }
 }

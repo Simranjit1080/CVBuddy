@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Box, VStack, Text, Button, Center, StatusBar } from 'native-base'
 import * as yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import InputField from '../../components/InputField'
@@ -13,8 +13,8 @@ interface Props {
 }
 
 const ValidationSchema = yup.object().shape({
-  email: yup.string().email('Must be a valid email address'),
-  password: yup.string(),
+  email: yup.string().email('Must be a valid email address').required(),
+  password: yup.string().required(),
 })
 
 interface Props {
@@ -23,7 +23,6 @@ interface Props {
 
 const Login = () => {
   const dispatch = useDispatch()
-
   const navigation = useNavigation()
   const formik = useFormik({
     initialValues: {
@@ -38,9 +37,9 @@ const Login = () => {
       email: formik.values.email,
       password: formik.values.password,
     }
-    console.log({ data })
     dispatch(signIn(data))
   }
+
   return (
     <Box
       safeAreaBottom
@@ -71,17 +70,24 @@ const Login = () => {
         <InputField
           value={formik.values.email}
           onChangeText={formik.handleChange('email')}
+          onBlur={formik.handleBlur('email')}
+          error={formik.errors.email}
           label="Email"
+          isInvalid={!!(formik.errors.email && formik.touched.email)}
         />
         <InputField
           value={formik.values.password}
           onChangeText={formik.handleChange('password')}
+          onBlur={formik.handleBlur('password')}
+          error={formik.errors.password}
           label="Password"
+          isInvalid={!!(formik.errors.password && formik.touched.password)}
         />
 
         <Button
           my={'10'}
           width="100%"
+          isDisabled={!(formik.dirty && formik.isValid)}
           height={50}
           alignSelf="flex-end"
           _text={{ fontWeight: 'bold' }}
@@ -93,6 +99,23 @@ const Login = () => {
           Login
         </Button>
       </KeyboardAwareScrollView>
+      <Box>
+        <Center>
+          <Text fontSize="md">
+            Don't have an account?{' '}
+            <Text
+              size={18}
+              color="coolGray.900"
+              fontWeight="bold"
+              onPress={() => {
+                navigation.navigate('SignUp')
+              }}
+            >
+              Sign Up
+            </Text>
+          </Text>
+        </Center>
+      </Box>
     </Box>
   )
 }
