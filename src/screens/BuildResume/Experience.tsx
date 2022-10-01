@@ -124,6 +124,7 @@ const Experience = ({ setActiveDotIndex }: Props) => {
           padding="12px"
           width="48%"
           alignSelf="flex-end"
+          isDisabled={!(formik.dirty && formik.isValid)}
           _text={{ fontWeight: 'bold' }}
           backgroundColor="coolGray.900"
           onPress={() => {
