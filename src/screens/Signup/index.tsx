@@ -47,7 +47,7 @@ const Signup = () => {
   const handleSubmit = () => {
     const data = {
       name: formik.values.name,
-      email: formik.values.email,
+      email: formik.values.email.toLowerCase(),
       password: formik.values.password,
       phone_number: formik.values.phone,
     }

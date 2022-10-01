@@ -34,7 +34,7 @@ const Login = () => {
   })
   const handleSubmit = () => {
     const data = {
-      email: formik.values.email,
+      email: formik.values.email.toLowerCase(),
       password: formik.values.password,
     }
     dispatch(signIn(data))
