@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { Box, VStack, Button, Text, StatusBar, HStack } from 'native-base'
 import React from 'react'
-import ExoportPDF from '../../components/CreatePdf'
+import ExoportPDF from '../../components/ExoportPDF'
 import { RenderHTML } from '../../components/RenderHtml'
 import { NavigationStackParams } from '../../navigation/AuthNavigator'
 import FillDetails from '../../icons/FillDetails.svg'
@@ -38,30 +38,7 @@ const Onboarding = () => {
   }
 
   const navigation = useNavigation<Props['navigation']>()
-  const tagsStyles = {
-    h2: {
-      fontSize: 22,
-      lineHeight: 26,
-      letterSpacing: 0,
-    },
-    body: {
-      fontSize: 16,
-      lineHeight: 24,
-      letterSpacing: 0,
 
-      marginTop: 16,
-    },
-    h6: {
-      fontSize: 10,
-      letterSpacing: 0,
-    },
-
-    p: {
-      fontSize: 16,
-      lineHeight: 24,
-      letterSpacing: 0,
-    },
-  }
   return (
     <SafeAreaView>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -71,8 +48,9 @@ const Onboarding = () => {
             style={{
               width: '100%',
             }}
+            key={item.title}
           >
-            <Box key={index} m="6" px={2}>
+            <Box m="6" px={2}>
               {index === 0 && <PickATemplate />}
               {index === 1 && <FillDetails />}
               {index === 2 && <Download />}
@@ -114,14 +92,6 @@ const Onboarding = () => {
             Get Started
           </Button>
         </HStack>
-
-        {/* <RenderHTML
-          tagsStyles={tagsStyles}
-          source={`<h1 style='text-align:center;'>
-
-          
-</h1>`}
-        /> */}
 
         {/* <ExoportPDF /> */}
       </VStack>
