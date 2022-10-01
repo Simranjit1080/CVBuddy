@@ -24,6 +24,7 @@ export const signInApi = async (data: any) => {
 }
 
 export const exportPdfApi = async (data: any) => {
+  console.log('data :>> ', data)
   const configurationObject = {
     method: 'post',
 
