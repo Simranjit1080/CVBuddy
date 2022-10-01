@@ -9,8 +9,7 @@ import Download from '../../icons/Download.svg'
 import PickATemplate from '../../icons/PickTemplate.svg'
 import { SafeAreaView, View } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { setIsLogged } from '../../redux/Auth/authSlice'
-import { removeData } from '../../utils/helperFunctions'
+import { setIsLogged, setToken } from '../../redux/Auth/authSlice'
 const Onboarding = () => {
   const disptach = useDispatch()
   const onboardingData = [
@@ -72,8 +71,8 @@ const Onboarding = () => {
             borderColor="coolGray.200"
             backgroundColor="white"
             borderWidth={1}
-            onPress={async () => {
-              await removeData('token')
+            onPress={() => {
+              disptach(setToken(''))
               disptach(setIsLogged(false))
             }}
           >

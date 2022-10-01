@@ -1,7 +1,5 @@
 import { takeLatest, put } from 'redux-saga/effects'
-import { signUpApi } from '../../API'
-import { signInApi } from '../../API/Auth'
-import { storeData } from '../../utils/helperFunctions'
+import { signUpApi, signInApi } from '../../API'
 import { showErrorToast } from '../../utils/helperFunctions'
 
 import {
@@ -12,6 +10,7 @@ import {
   signIn,
   signInSuccess,
   signInFailed,
+  setToken,
 } from './authSlice'
 
 interface SignUpAction {
@@ -28,7 +27,7 @@ export function* signUpSaga(action: SignUpAction): Generator {
     const response: any = yield signUpApi(action.payload)
     if (response.data.status) {
       yield put(signUpSuccess(response.data))
-      yield storeData('token', response.data.token)
+      yield put(setToken(response.data.data.token))
       yield put(setIsLogged(true))
     } else {
       showErrorToast(response.data.message)
@@ -45,7 +44,7 @@ export function* signInSaga(action: SignInAction): Generator {
     const response: any = yield signInApi(action.payload)
     if (response.data.status) {
       yield put(signInSuccess(response.data))
-      yield storeData('token', response.data.token)
+      yield put(setToken(response.data.data.token))
       yield put(setIsLogged(true))
     } else {
       showErrorToast(response.data.message)

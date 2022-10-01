@@ -1,6 +1,7 @@
-import { takeLatest, put } from 'redux-saga/effects'
+import { takeLatest, put, select } from 'redux-saga/effects'
 import { addResumeApi } from '../../API'
 import { showErrorToast } from '../../utils/helperFunctions'
+import { selectToken } from '../Auth/authSelectors'
 import {
   addResumeSuccess,
   addResumeFailed,
@@ -14,7 +15,8 @@ interface AddResumeAction {
 
 export function* addResumeSaga(action: AddResumeAction): Generator {
   try {
-    const response: any = yield addResumeApi(action.payload)
+    const token = yield select(selectToken)
+    const response: any = yield addResumeApi(action.payload, token)
     if (response.data.status) {
       yield put(addResumeSuccess(response.data))
     } else {

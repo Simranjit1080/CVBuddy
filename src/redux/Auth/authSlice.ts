@@ -8,6 +8,7 @@ const initialState = {
   signInError: null,
   signInData: null,
   isLoggedIn: false,
+  token: '',
 }
 
 const authSlice = createSlice({
@@ -39,6 +40,9 @@ const authSlice = createSlice({
     setIsLogged: (state, action) => {
       state.isLoggedIn = action.payload
     },
+    setToken: (state, action) => {
+      state.token = action.payload
+    },
   },
 })
 
@@ -50,6 +54,7 @@ export const {
   signIn,
   signInFailed,
   signInSuccess,
+  setToken,
 } = authSlice.actions
 
 export default authSlice.reducer

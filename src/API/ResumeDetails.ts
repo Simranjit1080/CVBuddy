@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { getData } from '../utils/helperFunctions'
 
 const baseUrl = 'http://cv-buddy.webrecorder.in/api'
 
-export const addResumeApi = async (data: any) => {
-  const token = await getData('token')
+export const addResumeApi = async (data: any, token: any) => {
   const configurationObject = {
     method: 'post',
     url: `${baseUrl}/add-resume`,
