@@ -50,8 +50,8 @@ const Education = ({ setActiveDotIndex }: Props) => {
   useEffect(() => {
     formik.setFieldValue('university', university)
     formik.setFieldValue('fieldOfStudy', fieldOfStudy)
-    formik.setFieldValue('gradStartDate', gradStartDate)
-    formik.setFieldValue('gradEndDate', gradEndDate)
+    formik.setFieldValue('startDate', gradStartDate)
+    formik.setFieldValue('gradDate', gradEndDate)
   }, [])
 
   return (

@@ -54,8 +54,8 @@ const Experience = ({ setActiveDotIndex }: Props) => {
   useEffect(() => {
     formik.setFieldValue('jobTitle', jobTitle)
     formik.setFieldValue('employer', employer)
-    formik.setFieldValue('jobStartDate', jobStartDate)
-    formik.setFieldValue('jobEndDate', jobEndDate)
+    formik.setFieldValue('startDate', jobStartDate)
+    formik.setFieldValue('endDate', jobEndDate)
     formik.setFieldValue('city', city)
   }, [])
   return (
