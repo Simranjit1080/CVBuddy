@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 
-const resumeDetailsSelector = (state: RootState) => state.resumeDetails
+const resumeDetailsSelector = (state: RootState) => state.resumeDetailsReducer
 
 export const selectFullName = createSelector(
   resumeDetailsSelector,
