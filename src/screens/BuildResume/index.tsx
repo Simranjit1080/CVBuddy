@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Box, StatusBar } from 'native-base'
-import ProgressBar from '../../components/Buttons/ProgressBar'
+import ProgressBar from '../../components/ProgressBar'
 import PersonalInfo from './PersonalInfo'
 import Education from './Education'
 import Experience from './Experience'
@@ -19,11 +19,7 @@ const BuildResume = () => {
       px="16px"
     >
       <StatusBar backgroundColor="white" barStyle="light-content" />
-      <ProgressBar
-        activeDotIndex={activeDotIndex}
-        setActiveDotIndex={setActiveDotIndex}
-        dotData={resumeTabs}
-      />
+      <ProgressBar activeDotIndex={activeDotIndex} dotData={resumeTabs} />
       {activeDotIndex === 0 && (
         <PersonalInfo setActiveDotIndex={setActiveDotIndex} />
       )}

@@ -20,10 +20,10 @@ import {
 } from '../../redux/ResumeDetails/resumeDetailsSelectors'
 
 const ValidationSchema = yup.object().shape({
-  university: yup.string(),
-  fieldOfStudy: yup.string(),
-  startDate: yup.string(),
-  gradDate: yup.string(),
+  university: yup.string().required('University is a required field'),
+  fieldOfStudy: yup.string().required('Field of study is a required field'),
+  startDate: yup.string().required('Start date is a required field'),
+  gradDate: yup.string().required('Graduation date is a required field'),
 })
 
 interface Props {
@@ -78,20 +78,34 @@ const Education = ({ setActiveDotIndex }: Props) => {
         <InputField
           value={formik.values.university}
           onChangeText={formik.handleChange('university')}
+          onBlur={formik.handleBlur('university')}
+          error={formik.errors.university}
+          isInvalid={!!(formik.errors.university && formik.touched.university)}
           label="University"
         />
         <InputField
           value={formik.values.fieldOfStudy}
           onChangeText={formik.handleChange('fieldOfStudy')}
+          onBlur={formik.handleBlur('fieldOfStudy')}
+          isInvalid={
+            !!(formik.errors.fieldOfStudy && formik.touched.fieldOfStudy)
+          }
+          error={formik.errors.fieldOfStudy}
           label="Field of Study"
         />
         <InputField
           value={formik.values.startDate}
           onChangeText={formik.handleChange('startDate')}
+          onBlur={formik.handleBlur('startDate')}
+          isInvalid={!!(formik.errors.startDate && formik.touched.startDate)}
+          error={formik.errors.startDate}
           label="Start Date"
         />
         <InputField
           value={formik.values.gradDate}
+          onBlur={formik.handleBlur('gradDate')}
+          isInvalid={!!(formik.errors.gradDate && formik.touched.gradDate)}
+          error={formik.errors.gradDate}
           onChangeText={formik.handleChange('gradDate')}
           label="Graduation Date"
         />
@@ -115,6 +129,7 @@ const Education = ({ setActiveDotIndex }: Props) => {
           padding="12px"
           width="48%"
           alignSelf="flex-end"
+          isDisabled={!(formik.dirty && formik.isValid)}
           _text={{ fontWeight: 'bold' }}
           backgroundColor="coolGray.900"
           onPress={() => {

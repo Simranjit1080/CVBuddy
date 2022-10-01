@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, HStack, Input, Text, TextArea } from 'native-base'
 import ErrorExclamation from '../../icons/ErrorExclamation.svg'
-import colors from 'native-base/lib/typescript/theme/base/colors'
 
 interface Props {
   label: string

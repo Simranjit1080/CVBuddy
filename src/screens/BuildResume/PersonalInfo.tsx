@@ -20,13 +20,18 @@ import {
 } from '../../redux/ResumeDetails/resumeDetailsSelectors'
 
 const ValidationSchema = yup.object().shape({
-  fullName: yup.string(),
-  email: yup.string().email('Must be a valid email address'),
+  fullName: yup.string().required('Full Name is a required field'),
+  email: yup
+    .string()
+    .email('Must be a valid email address')
+    .required('Email is a required field'),
   phone: yup
     .string()
     .matches(/^[0-9]+$/, 'Please enter the valid mobile number')
-    .min(10, 'Please enter the valid mobile number'),
-  bio: yup.string(),
+    .max(10, 'Please enter 10 digit mobile number')
+    .min(10, 'Please enter 10 digit mobile number')
+    .required('Phone is a required field'),
+  bio: yup.string().required('Bio is a required field'),
 })
 
 interface Props {
@@ -37,10 +42,10 @@ const PersonalInfo = ({ setActiveDotIndex }: Props) => {
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues: {
-      fullName: 'Simranjit Singh',
-      email: 'simranjits@geekyants.com',
-      phone: '8559062363',
-      bio: 'Hey there',
+      fullName: '',
+      email: '',
+      phone: '',
+      bio: '',
     },
     onSubmit: (values) => {},
     validationSchema: ValidationSchema,
@@ -81,22 +86,34 @@ const PersonalInfo = ({ setActiveDotIndex }: Props) => {
         <InputField
           value={formik.values.fullName}
           onChangeText={formik.handleChange('fullName')}
+          isInvalid={!!(formik.errors.fullName && formik.touched.fullName)}
+          onBlur={formik.handleBlur('fullName')}
+          error={formik.errors.fullName}
           label="Full Name"
         />
         <InputField
           value={formik.values.email}
           onChangeText={formik.handleChange('email')}
+          isInvalid={!!(formik.errors.email && formik.touched.email)}
+          onBlur={formik.handleBlur('email')}
+          error={formik.errors.email}
           label="Email"
         />
         <InputField
           value={formik.values.phone}
           onChangeText={formik.handleChange('phone')}
+          isInvalid={!!(formik.errors.phone && formik.touched.phone)}
+          onBlur={formik.handleBlur('phone')}
+          error={formik.errors.phone}
           label="Phone"
         />
         <InputField
           isTextArea={true}
           value={formik.values.bio}
           onChangeText={formik.handleChange('bio')}
+          onBlur={formik.handleBlur('bio')}
+          error={formik.errors.bio}
+          isInvalid={!!(formik.errors.bio && formik.touched.bio)}
           label="Bio"
         />
       </KeyboardAwareScrollView>
@@ -104,6 +121,7 @@ const PersonalInfo = ({ setActiveDotIndex }: Props) => {
         padding="12px"
         width="48%"
         alignSelf="flex-end"
+        isDisabled={!(formik.dirty && formik.isValid)}
         _text={{ fontWeight: 'bold' }}
         backgroundColor="coolGray.900"
         onPress={() => {
