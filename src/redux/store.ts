@@ -10,20 +10,10 @@ import {
   REGISTER,
 } from 'redux-persist'
 import authReducer from './Auth/authSlice'
-// import stockCandleDetailSlice from './StockCandleDetail/stockCandleDetailSlice'
-// import stockGraphDetailSlice from './StockGraphDetail/stockGraphDetailSlice'
-// import wishlistSlice from './Wishlist/wishlistSlice'
-// import aboutStockDataSlice from './AboutStockData/aboutStockDataSlice'
-// import allStocksDataSlice from './AllStockData/allStocksDataSlice'
-// import userProfileSlice from './UserProfile/userProfileSlice'
-// import pendingOrdersSlice from './PendingOrders/pendingOrdersSlice'
-// import holdingsSlice from './Holdings/holdingsSlice'
-// import completedOrdersSlice from './CompletedOrders/completedOrdersSlice'
-// import executeOrderSlice from './executeOrder/executeOrderSlice'
+import resumeDetailsSlice from './ResumeDetails/resumeDetailsSlice'
+
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './rootSaga'
-// import walletSlice from './Wallet/walletSlice'
-// import authDetailsSlice from './AuthDetails/authDetailsSlice'
 
 const persistConfig = {
   key: 'root',
@@ -44,6 +34,7 @@ const sagaMiddleware = createSagaMiddleware()
 export const store = configureStore({
   reducer: {
     userAuth: persistedReducer,
+    resumeDetailsReducer: resumeDetailsSlice,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
