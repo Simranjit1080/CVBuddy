@@ -86,23 +86,6 @@ const Login = () => {
           Login
         </Button>
       </KeyboardAwareScrollView>
-      <Box>
-        <Center>
-          <Text fontSize="md">
-            Already have an account?{' '}
-            <Text
-              size={18}
-              color="coolGray.900"
-              fontWeight="bold"
-              onPress={() => {
-                navigation.navigate('Login')
-              }}
-            >
-              Login{' '}
-            </Text>
-          </Text>
-        </Center>
-      </Box>
     </Box>
   )
 }
