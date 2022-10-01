@@ -12,7 +12,7 @@ export const AppRoute = ({ isLoggedIn }: Props) => {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-        {isLoggedIn ? <AuthNavigator /> : <AppNavigator />}
+        {false ? <AuthNavigator /> : <AppNavigator />}
       </NativeBaseProvider>
     </NavigationContainer>
   )
