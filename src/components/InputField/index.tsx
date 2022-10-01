@@ -43,6 +43,7 @@ const InputField = ({ label, value, onChangeText, isTextArea }: Props) => {
           paddingX="12px"
           value={value}
           onChangeText={onChangeText}
+          secureTextEntry={label === 'Password' || label === 'Confirm Password'}
         />
       )}
     </Box>

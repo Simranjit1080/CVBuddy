@@ -16,6 +16,9 @@ const initialState = {
   city: '',
   skillName: '',
   proficiency: '',
+  addResumeStatus: 'idle',
+  addResumeError: null,
+  addResumeData: null,
 }
 
 const authDetailsSlice = createSlice({
@@ -67,6 +70,17 @@ const authDetailsSlice = createSlice({
     setProficiency: (state, action) => {
       state.proficiency = action.payload
     },
+    addResume: (state, _action) => {
+      state.addResumeStatus = 'Loading'
+    },
+    addResumeSuccess: (state, action) => {
+      state.addResumeStatus = 'Success'
+      state.addResumeData = action.payload
+    },
+    addResumeFailed: (state, action) => {
+      state.addResumeStatus = 'Failed'
+      state.addResumeError = action.payload
+    },
   },
 })
 
@@ -86,6 +100,9 @@ export const {
   setSkillName,
   setUniversity,
   setCity,
+  addResumeSuccess,
+  addResumeFailed,
+  addResume,
 } = authDetailsSlice.actions
 
 export default authDetailsSlice.reducer

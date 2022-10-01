@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { Box, VStack, Button, Text } from 'native-base'
+import { Box, VStack, Button, Text, StatusBar, HStack } from 'native-base'
 import React from 'react'
 import ExoportPDF from '../../components/CreatePdf'
 import { RenderHTML } from '../../components/RenderHtml'
@@ -8,7 +8,11 @@ import FillDetails from '../../icons/FillDetails.svg'
 import Download from '../../icons/Download.svg'
 import PickATemplate from '../../icons/PickTemplate.svg'
 import { SafeAreaView, View } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { setIsLogged } from '../../redux/Auth/authSlice'
+import { removeData } from '../../utils/helperFunctions'
 const Onboarding = () => {
+  const disptach = useDispatch()
   const onboardingData = [
     {
       title: 'Pick a Template',
@@ -60,6 +64,7 @@ const Onboarding = () => {
   }
   return (
     <SafeAreaView>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <VStack space={2} alignItems="center" my={8} px={4}>
         {onboardingData.map((item, index) => (
           <View
@@ -80,18 +85,35 @@ const Onboarding = () => {
             </Box>
           </View>
         ))}
-        <Button
-          padding="12px"
-          width="30%"
-          alignSelf="flex-end"
-          _text={{ fontWeight: 'bold' }}
-          backgroundColor="coolGray.900"
-          onPress={() => {
-            navigation.navigate('BuildResume')
-          }}
-        >
-          Get Started
-        </Button>
+        <HStack width="full" justifyContent="space-between">
+          <Button
+            padding="12px"
+            width="48%"
+            alignSelf="flex-start"
+            _text={{ fontWeight: 'bold', color: 'coolGray.900' }}
+            borderColor="coolGray.200"
+            backgroundColor="white"
+            borderWidth={1}
+            onPress={async () => {
+              await removeData('token')
+              disptach(setIsLogged(false))
+            }}
+          >
+            SignOut
+          </Button>
+          <Button
+            padding="12px"
+            width="48%"
+            alignSelf="flex-end"
+            _text={{ fontWeight: 'bold' }}
+            backgroundColor="coolGray.900"
+            onPress={() => {
+              navigation.navigate('BuildResume')
+            }}
+          >
+            Get Started
+          </Button>
+        </HStack>
 
         {/* <RenderHTML
           tagsStyles={tagsStyles}

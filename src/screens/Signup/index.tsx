@@ -1,24 +1,26 @@
 import React from 'react'
-import { View, Box, VStack, Text, Button, Center } from 'native-base'
+import { View, Box, VStack, Text, Button, Center, StatusBar } from 'native-base'
 import * as yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import InputField from '../../components/InputField'
 import { useNavigation } from '@react-navigation/native'
+import { signUp } from '../../redux/Auth/authSlice'
 
 interface Props {
   setActiveDotIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const ValidationSchema = yup.object().shape({
-  fullName: yup.string(),
+  name: yup.string(),
   email: yup.string().email('Must be a valid email address'),
   phone: yup
     .string()
     .matches(/^[0-9]+$/, 'Please enter the valid mobile number')
     .min(10, 'Please enter the valid mobile number'),
-  bio: yup.string(),
+  password: yup.string(),
+  confirmPasword: yup.string(),
 })
 
 interface Props {
@@ -33,12 +35,23 @@ const Signup = () => {
     initialValues: {
       name: '',
       email: '',
+      phone: '',
       password: '',
       confirmPasword: '',
     },
     onSubmit: (values) => {},
     validationSchema: ValidationSchema,
   })
+
+  const handleSubmit = () => {
+    const data = {
+      name: formik.values.name,
+      email: formik.values.email,
+      password: formik.values.password,
+      phone_number: formik.values.phone,
+    }
+    dispatch(signUp(data))
+  }
   return (
     <Box
       safeAreaBottom
@@ -47,6 +60,7 @@ const Signup = () => {
       paddingTop="32px"
       px="16px"
     >
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <KeyboardAwareScrollView style={{ paddingTop: 36 }}>
         <Text
           fontSize="24px"
@@ -66,7 +80,7 @@ const Signup = () => {
           Build your brand-new resume in as little as 5 minutes.
         </Text>
         <InputField
-          value={formik.values.email}
+          value={formik.values.name}
           onChangeText={formik.handleChange('name')}
           label="Full Name"
         />
@@ -76,14 +90,14 @@ const Signup = () => {
           label="Email"
         />
         <InputField
-          value={formik.values.confirmPasword}
-          onChangeText={formik.handleChange('Phone')}
+          value={formik.values.phone}
+          onChangeText={formik.handleChange('phone')}
           label="Phone"
         />
         <InputField
           value={formik.values.password}
           onChangeText={formik.handleChange('password')}
-          label="Email"
+          label="Password"
         />
 
         <InputField
@@ -98,7 +112,9 @@ const Signup = () => {
           alignSelf="flex-end"
           _text={{ fontWeight: 'bold' }}
           backgroundColor="coolGray.900"
-          onPress={() => {}}
+          onPress={() => {
+            handleSubmit()
+          }}
         >
           Sign Up
         </Button>
@@ -115,7 +131,7 @@ const Signup = () => {
                 navigation.navigate('Login')
               }}
             >
-              Login{' '}
+              Login
             </Text>
           </Text>
         </Center>

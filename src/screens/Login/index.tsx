@@ -1,24 +1,20 @@
 import React from 'react'
-import { View, Box, VStack, Text, Button, Center } from 'native-base'
+import { View, Box, VStack, Text, Button, Center, StatusBar } from 'native-base'
 import * as yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import InputField from '../../components/InputField'
 import { useNavigation } from '@react-navigation/native'
+import { signIn } from '../../redux/Auth/authSlice'
 
 interface Props {
   setActiveDotIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const ValidationSchema = yup.object().shape({
-  fullName: yup.string(),
   email: yup.string().email('Must be a valid email address'),
-  phone: yup
-    .string()
-    .matches(/^[0-9]+$/, 'Please enter the valid mobile number')
-    .min(10, 'Please enter the valid mobile number'),
-  bio: yup.string(),
+  password: yup.string(),
 })
 
 interface Props {
@@ -37,6 +33,14 @@ const Login = () => {
     onSubmit: (values) => {},
     validationSchema: ValidationSchema,
   })
+  const handleSubmit = () => {
+    const data = {
+      email: formik.values.email,
+      password: formik.values.password,
+    }
+    console.log({ data })
+    dispatch(signIn(data))
+  }
   return (
     <Box
       safeAreaBottom
@@ -45,6 +49,7 @@ const Login = () => {
       paddingTop="32px"
       px="16px"
     >
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <KeyboardAwareScrollView style={{ paddingTop: 36 }}>
         <Text
           fontSize="24px"
@@ -81,7 +86,9 @@ const Login = () => {
           alignSelf="flex-end"
           _text={{ fontWeight: 'bold' }}
           backgroundColor="coolGray.900"
-          onPress={() => {}}
+          onPress={() => {
+            handleSubmit()
+          }}
         >
           Login
         </Button>

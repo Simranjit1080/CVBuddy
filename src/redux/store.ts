@@ -20,12 +20,12 @@ const persistConfig = {
   version: 1,
   storage: AsyncStorage,
   blacklist: [
-    'authData',
-    'authDataStatus',
-    'authDataError',
-    'registrationData',
-    'registrationDataStatus',
-    'registrationDataError',
+    'signUpStatus',
+    'signUpError',
+    'signUpData',
+    'signInStatus',
+    'signInError',
+    'signInData',
   ],
 }
 const persistedReducer = persistReducer(persistConfig, authReducer)
@@ -34,7 +34,7 @@ const sagaMiddleware = createSagaMiddleware()
 export const store = configureStore({
   reducer: {
     userAuth: persistedReducer,
-    resumeDetailsReducer: resumeDetailsSlice,
+    resumeDetails: resumeDetailsSlice,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

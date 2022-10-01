@@ -1,3 +1,4 @@
-import { getAuthDetails, getRefreshToken, getRegistrationDetails } from './Auth'
+import { signUpApi } from './Auth'
+import { addResumeApi } from './ResumeDetails'
 
-export { getAuthDetails, getRefreshToken, getRegistrationDetails }
+export { signUpApi, addResumeApi }

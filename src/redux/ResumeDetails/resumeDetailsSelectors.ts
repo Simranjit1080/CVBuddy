@@ -57,3 +57,23 @@ export const selectCity = createSelector(
   resumeDetailsSelector,
   (subState) => subState.city,
 )
+export const selectSkillName = createSelector(
+  resumeDetailsSelector,
+  (subState) => subState.skillName,
+)
+export const selectProficiency = createSelector(
+  resumeDetailsSelector,
+  (subState) => subState.proficiency,
+)
+export const selectAddResumeStatus = createSelector(
+  resumeDetailsSelector,
+  (subState) => subState.addResumeStatus,
+)
+export const selectAddResumeData = createSelector(
+  resumeDetailsSelector,
+  (subState) => subState.addResumeData,
+)
+export const selectAddResumeError = createSelector(
+  resumeDetailsSelector,
+  (subState) => subState.addResumeError,
+)

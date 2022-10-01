@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Text, Input, Button } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import InputField from '../../components/InputField'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setBio,
   setEmail,
   setFullName,
   setPhone,
 } from '../../redux/ResumeDetails/resumeDetailsSlice'
+import {
+  selectFullName,
+  selectEmail,
+  selectPhone,
+  selectBio,
+} from '../../redux/ResumeDetails/resumeDetailsSelectors'
 
 const ValidationSchema = yup.object().shape({
   fullName: yup.string(),
@@ -31,14 +37,26 @@ const PersonalInfo = ({ setActiveDotIndex }: Props) => {
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues: {
-      fullName: '',
-      email: '',
-      phone: '',
-      bio: '',
+      fullName: 'Simranjit Singh',
+      email: 'simranjits@geekyants.com',
+      phone: '8559062363',
+      bio: 'Hey there',
     },
     onSubmit: (values) => {},
     validationSchema: ValidationSchema,
   })
+
+  const fullName = useSelector(selectFullName)
+  const email = useSelector(selectEmail)
+  const phone = useSelector(selectPhone)
+  const bio = useSelector(selectBio)
+  useEffect(() => {
+    formik.setFieldValue('fullName', fullName)
+    formik.setFieldValue('email', email)
+    formik.setFieldValue('phone', phone)
+    formik.setFieldValue('bio', bio)
+  }, [])
+
   return (
     <>
       <KeyboardAwareScrollView style={styles.scrollView}>

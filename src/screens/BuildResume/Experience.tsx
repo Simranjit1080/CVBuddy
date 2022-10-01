@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Text, Input, Button, HStack } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
@@ -12,7 +12,14 @@ import {
   setJobStartDate,
   setJobTitle,
 } from '../../redux/ResumeDetails/resumeDetailsSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectJobTitle,
+  selectEmployer,
+  selectJobStartDate,
+  selectJobEndDate,
+  selectCity,
+} from '../../redux/ResumeDetails/resumeDetailsSelectors'
 
 const ValidationSchema = yup.object().shape({
   jobTitle: yup.string(),
@@ -30,15 +37,27 @@ const Experience = ({ setActiveDotIndex }: Props) => {
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues: {
-      jobTitle: '',
-      employer: '',
-      startDate: '',
-      endDate: '',
-      city: '',
+      jobTitle: 'Software Engineer II',
+      employer: 'Geekyants',
+      startDate: '1 August 2021',
+      endDate: '30 Auguts 2023',
+      city: 'Bangalore',
     },
     onSubmit: () => {},
     validationSchema: ValidationSchema,
   })
+  const jobTitle = useSelector(selectJobTitle)
+  const employer = useSelector(selectEmployer)
+  const jobStartDate = useSelector(selectJobStartDate)
+  const jobEndDate = useSelector(selectJobEndDate)
+  const city = useSelector(selectCity)
+  useEffect(() => {
+    formik.setFieldValue('jobTitle', jobTitle)
+    formik.setFieldValue('employer', employer)
+    formik.setFieldValue('jobStartDate', jobStartDate)
+    formik.setFieldValue('jobEndDate', jobEndDate)
+    formik.setFieldValue('city', city)
+  }, [])
   return (
     <>
       <KeyboardAwareScrollView style={styles.scrollView}>
@@ -92,7 +111,9 @@ const Experience = ({ setActiveDotIndex }: Props) => {
           width="48%"
           alignSelf="flex-start"
           _text={{ fontWeight: 'bold', color: 'coolGray.900' }}
-          backgroundColor="coolGray.200"
+          borderColor="coolGray.200"
+          backgroundColor="white"
+          borderWidth={1}
           onPress={() => {
             setActiveDotIndex(1)
           }}

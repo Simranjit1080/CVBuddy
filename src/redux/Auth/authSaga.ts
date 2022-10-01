@@ -1,58 +1,56 @@
 import { takeLatest, put } from 'redux-saga/effects'
-import { getAuthDetails, getRegistrationDetails } from '../../API'
+import { signUpApi } from '../../API'
+import { signInApi } from '../../API/Auth'
+import { storeData } from '../../utils/helperFunctions'
 import {
-  getAuthData,
-  getAuthDataFailed,
-  getAuthDataSuccess,
-  getRegistrationData,
-  getRegistrationDataFailed,
-  getRegistrationDataSuccess,
-  signOut,
+  signUp,
+  signUpFailed,
+  signUpSuccess,
+  setIsLogged,
+  signIn,
+  signInSuccess,
+  signInFailed,
 } from './authSlice'
 
-interface LoginAction {
-  payload: {
-    username: string
-    password: string
-  }
+interface SignUpAction {
+  payload: any
+  type: string
+}
+interface SignInAction {
+  payload: any
   type: string
 }
 
-interface RegistrationAction {
-  payload: {
-    name: string
-    mobile: string
-    email: string
-    password: string
-    username: string
-  }
-  type: string
-}
-export function* getAuthDataSaga(action: LoginAction): Generator {
+export function* signUpSaga(action: SignUpAction): Generator {
   try {
-    const response: any = yield getAuthDetails(action.payload)
-    if (response.data.msg === 'Login successful') {
-      yield put(getAuthDataSuccess(response.data))
+    const response: any = yield signUpApi(action.payload)
+    if (response.status) {
+      yield put(signUpSuccess(response.data))
+      yield storeData('token', response.data.token)
+      yield put(setIsLogged(true))
     }
   } catch (error: any) {
-    yield put(signOut())
-    yield put(getAuthDataFailed(error.response.data))
+    yield put(signUpFailed(error.response.data))
   }
 }
-export function* getRegistrationDataSaga(
-  action: RegistrationAction,
-): Generator {
+
+export function* signInSaga(action: SignInAction): Generator {
+  console.log(action.payload)
   try {
-    const response: any = yield getRegistrationDetails(action.payload)
-    if (response.data.msg === 'Registration successful') {
-      yield put(getRegistrationDataSuccess(response.data))
+    const response: any = yield signInApi(action.payload)
+    if (response.status) {
+      yield put(signInSuccess(response.data))
+      yield storeData('token', response.data.token)
+      yield put(setIsLogged(true))
     }
   } catch (error: any) {
-    yield put(getRegistrationDataFailed(error.response.data))
+    console.log({ error })
+
+    yield put(signInFailed(error.response.data))
   }
 }
 
 export default function* authSaga() {
-  yield takeLatest(getAuthData.type, getAuthDataSaga)
-  yield takeLatest(getRegistrationData.type, getRegistrationDataSaga)
+  yield takeLatest(signUp.type, signUpSaga)
+  yield takeLatest(signIn.type, signInSaga)
 }

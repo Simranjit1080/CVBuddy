@@ -12,7 +12,7 @@ export default function App() {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <AppRoute isLoggedIn={true} />
+          <AppRoute />
         </PersistGate>
       </Provider>
     </>

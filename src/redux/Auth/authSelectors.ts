@@ -1,41 +1,33 @@
-import {createSelector} from '@reduxjs/toolkit';
-import type {RootState} from '../store';
+import { createSelector } from '@reduxjs/toolkit'
+import type { RootState } from '../store'
 
-const authSelector = (state: RootState) => state.userAuth;
+const authSelector = (state: RootState) => state.userAuth
 
+export const selectSignUpStatus = createSelector(
+  authSelector,
+  (subState) => subState.signUpStatus,
+)
+export const selectSignUpData = createSelector(
+  authSelector,
+  (subState) => subState.signUpData,
+)
+export const selectSignUpError = createSelector(
+  authSelector,
+  (subState) => subState.signUpError,
+)
+export const selectSignInStatus = createSelector(
+  authSelector,
+  (subState) => subState.signInStatus,
+)
+export const selectSignInData = createSelector(
+  authSelector,
+  (subState) => subState.signInData,
+)
+export const selectSignInError = createSelector(
+  authSelector,
+  (subState) => subState.signInError,
+)
 export const selectIsLoggedIn = createSelector(
   authSelector,
-  subState => subState.isLoggedIn,
-);
-export const selectEmail = createSelector(
-  authSelector,
-  subState => subState.email,
-);
-export const selectUserName = createSelector(
-  authSelector,
-  subState => subState.userName,
-);
-export const selectAuthData = createSelector(
-  authSelector,
-  subState => subState.authData,
-);
-export const selectAuthDataError = createSelector(
-  authSelector,
-  subState => subState.authDataError,
-);
-export const selectAuthDataStatus = createSelector(
-  authSelector,
-  subState => subState.authDataStatus,
-);
-export const selectRegistrationData = createSelector(
-  authSelector,
-  subState => subState.registrationData,
-);
-export const selectRegistrationDataError = createSelector(
-  authSelector,
-  subState => subState.registrationDataError,
-);
-export const selectRegistrationDataStatus = createSelector(
-  authSelector,
-  subState => subState.registrationDataStatus,
-);
+  (subState) => subState.isLoggedIn,
+)

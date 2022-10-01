@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box } from 'native-base'
+import { Box, StatusBar } from 'native-base'
 import ProgressBar from '../../components/Buttons/ProgressBar'
 import PersonalInfo from './PersonalInfo'
 import Education from './Education'
@@ -18,6 +18,7 @@ const BuildResume = () => {
       paddingTop="32px"
       px="16px"
     >
+      <StatusBar backgroundColor="white" barStyle="light-content" />
       <ProgressBar
         activeDotIndex={activeDotIndex}
         setActiveDotIndex={setActiveDotIndex}
