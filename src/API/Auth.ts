@@ -22,3 +22,19 @@ export const signInApi = async (data: any) => {
   const response = await axios(configurationObject)
   return response
 }
+
+export const exportPdfApi = async (data: any) => {
+  const configurationObject = {
+    method: 'post',
+
+    // url: `https://222b-106-51-67-220.in.ngrok.io/api/send-email`,
+    url: 'http://cv-buddy.webrecorder.in/api/send-email',
+
+    data: {
+      resumeId: 1,
+      file: data,
+    },
+  }
+  const response = await axios(configurationObject)
+  return response
+}

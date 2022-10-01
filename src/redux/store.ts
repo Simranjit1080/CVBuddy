@@ -26,6 +26,7 @@ const persistConfig = {
     'signInStatus',
     'signInError',
     'signInData',
+    'pdfData',
   ],
 }
 const persistedReducer = persistReducer(persistConfig, authReducer)

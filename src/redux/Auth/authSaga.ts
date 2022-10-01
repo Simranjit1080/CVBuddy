@@ -11,6 +11,9 @@ import {
   signInSuccess,
   signInFailed,
   setToken,
+  exportPdfSuccess,
+  exportPdfFailed,
+  exportPdf,
 } from './authSlice'
 
 interface SignUpAction {
@@ -56,7 +59,21 @@ export function* signInSaga(action: SignInAction): Generator {
   }
 }
 
+export function* exportPdfSaga(action: SignInAction): Generator {
+  try {
+    const response: any = yield exportPdfApi(action.payload)
+    if (response.status) {
+      yield put(exportPdfSuccess(response.data))
+      showSuccessToast('Pdf emailed successfully')
+    }
+    yield put(exportPdfFailed(true))
+  } catch (error: any) {
+    yield put(signInFailed(error.response.data))
+  }
+}
+
 export default function* authSaga() {
   yield takeLatest(signUp.type, signUpSaga)
   yield takeLatest(signIn.type, signInSaga)
+  yield takeLatest(exportPdf.type, exportPdfSaga)
 }

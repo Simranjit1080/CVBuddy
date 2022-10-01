@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react'
-import { Box, Text, Input, Button, HStack } from 'native-base'
+import {
+  Box,
+  Text,
+  Input,
+  Button,
+  HStack,
+  Center,
+  Pressable,
+} from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
 import { useFormik } from 'formik'
@@ -259,6 +267,19 @@ const Skills = ({ setActiveDotIndex }: Props) => {
           onChangeText={formik.handleChange('proficiency')}
           label="Proficiency"
         />
+
+        <Pressable
+          padding="12px"
+          marginTop={10}
+          width="80%"
+          alignSelf="center"
+          backgroundColor="coolGray.900"
+          onPress={() => {}}
+        >
+          <Text color={'white'} bold textAlign={'center'} fontSize="md">
+            Add Skill +
+          </Text>
+        </Pressable>
       </KeyboardAwareScrollView>
       <HStack width="full" justifyContent="space-between">
         <Button
@@ -270,6 +291,8 @@ const Skills = ({ setActiveDotIndex }: Props) => {
           backgroundColor="white"
           borderWidth={1}
           onPress={() => {
+            dispatch(setSkillName(formik.values.skillName))
+            dispatch(setProficiency(formik.values.proficiency))
             setActiveDotIndex(2)
           }}
         >
@@ -282,26 +305,29 @@ const Skills = ({ setActiveDotIndex }: Props) => {
           _text={{ fontWeight: 'bold', color: 'coolGray.900' }}
           backgroundColor="coolGray.200"
           onPress={() => {
+            dispatch(setSkillName(formik.values.skillName))
+            dispatch(setProficiency(formik.values.proficiency))
             navigation.navigate('Preview')
           }}
         >
           Preview
         </Button>
-        <Button
-          padding="12px"
-          width="31%"
-          alignSelf="flex-end"
-          _text={{ fontWeight: 'bold' }}
-          backgroundColor="coolGray.900"
-          onPress={() => {
-            dispatch(setSkillName(formik.values.skillName))
-            dispatch(setProficiency(formik.values.proficiency))
-            handleSubmit()
-          }}
-        >
-          Export
-        </Button>
       </HStack>
+      <Button
+        padding="12px"
+        marginTop={4}
+        width="100%"
+        alignSelf="flex-end"
+        _text={{ fontWeight: 'bold' }}
+        backgroundColor="coolGray.900"
+        onPress={() => {
+          dispatch(setSkillName(formik.values.skillName))
+          dispatch(setProficiency(formik.values.proficiency))
+          handleSubmit()
+        }}
+      >
+        Save Template
+      </Button>
     </>
   )
 }

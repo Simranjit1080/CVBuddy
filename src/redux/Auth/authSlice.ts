@@ -9,6 +9,7 @@ const initialState = {
   signInData: null,
   isLoggedIn: false,
   token: '',
+  pdfData: null,
 }
 
 const authSlice = createSlice({
@@ -43,6 +44,15 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload
     },
+    exportPdf: (state, action) => {
+      state.pdfData = action.payload
+    },
+    exportPdfSuccess: (state, action) => {
+      state.pdfData = action.payload
+    },
+    exportPdfFailed: (state, action) => {
+      state.pdfData = action.payload
+    },
   },
 })
 
@@ -55,6 +65,9 @@ export const {
   signInFailed,
   signInSuccess,
   setToken,
+  exportPdf,
+  exportPdfSuccess,
+  exportPdfFailed,
 } = authSlice.actions
 
 export default authSlice.reducer
