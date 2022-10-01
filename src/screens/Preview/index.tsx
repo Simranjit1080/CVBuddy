@@ -167,7 +167,6 @@ const Preview = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      borderWidth: 1,
     },
     expItem: {
       paddingLeft: -20,
